@@ -359,18 +359,22 @@ class GMOCoin(object):
         :type executionType: str
         :param price: *executionTypeによる LIMIT の場合は必須、 MARKET の場合は不要。
         :type price: number
-        :param settlePosition_positionId: *required 建玉は1つのみ指定可能。
-        :type settlePosition_positionId: number
-        :param settlePosition_size: *required 建玉は1つのみ指定可能。
-        :type settlePosition_size: str
+        :param settlePosition.positionId: *required 建玉は1つのみ指定可能。
+        :type settlePosition.positionId: number
+        :param settlePosition.size: *required 建玉は1つのみ指定可能。
+        :type settlePosition.size: str
         """
         payload = {
             'symbol': symbol, 
             'side': side, 
             'executionType': executionType, 
             'price': price, 
-            'settlePosition.positionId': settlePosition_positionId, 
-            'settlePosition.size': settlePosition_size
+            'settlePosition': [
+                {
+                    'positionId': settlePosition_positionId,
+                    'size': settlePosition_size
+                }
+            ]
         }
         return self._request('POST', '/v1/closeOrder', payload, auth=True)
 
